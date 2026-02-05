@@ -1,14 +1,23 @@
-'''contador=0
-while contador<10:
-        print(f"estoy en la vuelta {contador} ")
-        contador=contador+1'''
 
+import secrets
 
-for o in range(1,6):
+lista=[]
+
+for _ in range(1,6):
     
-    diccionario={}
-    diccionario["id"]=int(input("ingrese el id del empleado: "))
-    diccionario["nombres"]=input("ingrese los nombres del empleado: ")
-    diccionario["documento"]=input("ingrese el documento del empleado: ")
-    diccionario["correo"]=input("ingrese el correo del empleado: ")
-    diccionario["contraseña"]=input("ingrese la contraseña del empleado: ")
+    id_random=secrets.token_urlsafe(6)
+    
+    diccionario={
+        "id":id_random, 
+        "nombres":input("ingrese los nombres del empleado: "),
+        "documento":input("ingrese el documento del empleado: "),
+        "correo":input("ingrese el correo del empleado: "),
+        "contraseña":input("ingrese la contraseña del empleado: ")
+    }
+
+    lista.append(diccionario)
+    print(f"Empleado con id {id_random} registrado con éxito.")
+        #el id sea entero o cadena alfanumérica por python
+   
+print("Lista de empleados registrados:")
+print(lista)
