@@ -1,21 +1,47 @@
-#Algoritmo para login de usuario, se permiten 3 intentos.
+﻿# Algoritmo para login de asesores, se permiten 3 intentos.
 
-correoBD="correo@gmail.com"
-contraseñaBD="contraseña123"
+import json
 
-intentos=3
-contador=0
 
-while contador<intentos:
-    correoInput=input("Ingrese su correo: ")
-    contraseñaInput=input("Ingrese su contraseña: ")
-    
-    if correoInput==correoBD and contraseñaInput==contraseñaBD:
-        print("¡Login exitoso!")
-        break
-    else:
-        contador+=1
+def cargar_credenciales(ruta_archivo="credenciales_asesores.json"):
+    try:
+        with open(ruta_archivo, "r", encoding="utf-8") as archivo:
+            return json.load(archivo)
+    except FileNotFoundError:
+        print("No se encontraron credenciales guardadas.")
+        print("Primero debes registrar los asesores.")
+        return []
+
+
+def login_asesor(credenciales_bd=None, intentos=3):
+    if credenciales_bd is None:
+        credenciales_bd = cargar_credenciales()
+
+    if not credenciales_bd:
+        return False
+
+    contador = 0
+
+    while contador < intentos:
+        correo_input = input("Ingrese su correo: ")
+        contrasena_input = input("Ingrese su contrasena: ")
+
+        login_exitoso = any(
+            credencial.get("correo") == correo_input
+            and credencial.get("contrasena") == contrasena_input
+            for credencial in credenciales_bd
+        )
+
+        if login_exitoso:
+            print("Login exitoso.")
+            return True
+
+        contador += 1
         print(f"Credenciales incorrectas. Intento {contador} de {intentos}.")
-        
-        if contador==intentos:
-            print("Has excedido el número máximo de intentos. Acceso bloqueado.")
+
+    print("Has excedido el numero maximo de intentos. Acceso bloqueado.")
+    return False
+
+
+if __name__ == "__main__":
+    login_asesor()
