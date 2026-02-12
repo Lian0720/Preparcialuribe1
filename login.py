@@ -8,8 +8,8 @@ def cargar_credenciales(ruta_archivo="credenciales_asesores.json"):
         with open(ruta_archivo, "r", encoding="utf-8") as archivo:
             return json.load(archivo)
     except FileNotFoundError:
-        print("No se encontraron credenciales guardadas.")
-        print("Primero debes registrar los asesores.")
+        print("No se encontraron credenciales guardadas. ❌")
+        print("Primero debes registrar los asesores. ⚠️")
         return []
 
 
@@ -23,8 +23,8 @@ def login_asesor(credenciales_bd=None, intentos=3):
     contador = 0
 
     while contador < intentos:
-        correo_input = input("Ingrese su correo: ")
-        contrasena_input = input("Ingrese su contrasena: ")
+        correo_input = input("Ingrese su correo 📧: ")
+        contrasena_input = input("Ingrese su contrasena 🔑: ")
 
         login_exitoso = any(
             credencial.get("correo") == correo_input
@@ -33,13 +33,13 @@ def login_asesor(credenciales_bd=None, intentos=3):
         )
 
         if login_exitoso:
-            print("Login exitoso.")
+            print("Login exitoso. ✅")
             return True
 
         contador += 1
-        print(f"Credenciales incorrectas. Intento {contador} de {intentos}.")
+        print(f"Credenciales incorrectas. Intento {contador} de {intentos}. ⚠️")
 
-    print("Has excedido el numero maximo de intentos. Acceso bloqueado.")
+    print("Has excedido el numero maximo de intentos. Acceso bloqueado. ❌")
     return False
 
 
