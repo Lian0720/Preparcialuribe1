@@ -1,24 +1,25 @@
 ﻿import json
 import secrets
 
-from login import login_asesor
+from login import login_gestor
 from generarListas import mostrar_reporte_promedio
 
 
-def registrar_asesores(cantidad=2, ruta_archivo="credenciales_asesores.json"):
+def registrar_gestores(cantidad=2, ruta_archivo="credenciales_gestores.json"):
     lista = []
     credenciales = []
 
     for _ in range(cantidad):
         id_random = secrets.token_urlsafe(6)
 
-        correo = input("Ingrese el correo del asesor 📧: ")
-        contrasena = input("Ingrese la contrasena del asesor 🔑: ")
+        correo = input("Ingrese el correo del gestor 📧: ")
+        contrasena = input("Ingrese la contrasena del gestor 🔑: ")
 
         diccionario = {
             "id": id_random,
-            "nombre del asesor": input("Ingrese los nombres del asesor 👨‍💼: "),
-            "marca": input("Ingrese la marca del asesor 👕: "),
+            "nombre del gestor": input("Ingrese los nombres del gestor 👨‍💼: "),
+            "empresa": input("Ingrese la empresa del gestor 🏛️:  "),
+            "rol": input("Ingrese el rol del gestor 🌱: "),
             "correo": correo,
             "contrasena": contrasena,
         }
@@ -38,10 +39,10 @@ def registrar_asesores(cantidad=2, ruta_archivo="credenciales_asesores.json"):
 
 
 def ejecutar_flujo_completo():
-    registrar_asesores()
+    registrar_gestores()
 
-    print("\n==============================\nInicio de login de asesores ✅\n==============================")
-    login_exitoso = login_asesor()
+    print("\n==============================\nInicio de login de gestores ambientales ✅\n==============================")
+    login_exitoso = login_gestor()
 
     if login_exitoso:
         print("\nLogin correcto ✅. Ejecutando medicones 📊...")

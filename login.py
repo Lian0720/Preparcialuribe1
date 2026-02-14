@@ -1,9 +1,9 @@
-﻿# Algoritmo para login de asesores, se permiten 3 intentos.
+﻿# Algoritmo para login de gestores, se permiten 3 intentos.
 
 import json
 
 
-def cargar_credenciales(ruta_archivo="credenciales_asesores.json"):
+def cargar_credenciales(ruta_archivo="credenciales_gestores.json"):
     try:
         with open(ruta_archivo, "r", encoding="utf-8") as archivo:
             return json.load(archivo)
@@ -13,7 +13,7 @@ def cargar_credenciales(ruta_archivo="credenciales_asesores.json"):
         return []
 
 
-def login_asesor(credenciales_bd=None, intentos=3):
+def login_gestor(credenciales_bd=None, intentos=3):
     if credenciales_bd is None:
         credenciales_bd = cargar_credenciales()
 
@@ -37,11 +37,11 @@ def login_asesor(credenciales_bd=None, intentos=3):
             return True
 
         contador += 1
-        print(f"Credenciales incorrectas. Intento {contador} de {intentos}. ⚠️")
+        print(f"Credenciales incorrectas. ❌ Intento {contador} de {intentos}. ⚠️")
 
     print("Has excedido el numero maximo de intentos. Acceso bloqueado. ❌")
     return False
 
 
 if __name__ == "__main__":
-    login_asesor()
+    login_gestor()
