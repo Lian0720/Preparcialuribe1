@@ -5,7 +5,7 @@ from login import login_gestor
 from generarListas import mostrar_reporte_promedio
 
 
-def registrar_gestores(cantidad=2, ruta_archivo="credenciales_gestores.json"):
+def registrar_gestores(cantidad=5, ruta_archivo="credenciales_gestores.json"):
     lista = []
     credenciales = []
 

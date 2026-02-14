@@ -1,10 +1,6 @@
 [
   {
-    "correo": "andres@emp.com",
+    "correo": "andres@epm.com",
     "contrasena": "12345"
-  },
-  {
-    "correo": "eduar@bancolombia.com",
-    "contrasena": "456789"
   }
 ]

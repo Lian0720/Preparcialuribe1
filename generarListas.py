@@ -1,88 +1,54 @@
-﻿# Recorrer una lista y obtener el promedio numerico.
 import random
 
-
-def calcular_promedio_mediciones(cantidad=100, minimo=0, maximo=50):
-    lista = [random.randint(minimo, maximo) for _ in range(cantidad)]
-    suma = sum(lista)
-    promedio = suma / len(lista)
-
-    if 0 < promedio <= 20:
-        estado = "Rotacion baja. ⬇️"
-    elif 20 < promedio < 30:
-        estado = "Rotacion normal. ➡️"
-    else:
-        estado = "Rotacion alta, ⬆️ se debe reabastecer"
-
-    return lista, promedio, estado
+MATERIALES = ("PET 🛢️", "CARTON 📦", "VIDRIO 🫙", "METAL 🪩")
 
 
-def eliminar_ultima_medicion(lista):
-    if not lista:
-        print("No hay mediciones para eliminar. ❌")
-        return
-
-    medicion_eliminada = lista.pop()
-    print(f"Se elimino la ultima medicion: 🗑️   {medicion_eliminada}")
+def generar_mediciones_por_material(cantidad_por_material=20, minimo=0, maximo=20):
+    return {
+        material: [random.randint(minimo, maximo) for _ in range(cantidad_por_material)]
+        for material in MATERIALES
+    }
 
 
-def buscar_posicion_medicion(lista):
-    if not lista:
-        print("No hay mediciones para buscar. ⚠️")
-        return
+def calcular_promedios(mediciones):
+    promedios_por_material = {
+        material: sum(valores) / len(valores) for material, valores in mediciones.items() if valores
+    }
+    todos_los_valores = [valor for valores in mediciones.values() for valor in valores]
+    promedio_global = sum(todos_los_valores) / len(todos_los_valores) if todos_los_valores else 0
 
-    try:
-        medicion = int(input("Ingrese la medicion a buscar 🔍: "))
-        posicion = lista.index(medicion)
-        print(f"La medicion {medicion} esta en la posicion {posicion}. ✅")
-    except ValueError:
-        print("La medicion no existe en la lista o el valor ingresado no es valido. ❌")
+    return promedios_por_material, promedio_global
 
 
-def eliminar_medicion_por_posicion(lista):
-    if not lista:
-        print("No hay mediciones para eliminar. ⚠️")
-        return
-
-    try:
-        posicion = int(input(f"Ingrese la posicion a eliminar 🗑️ (0 a {len(lista) - 1}): "))
-        medicion_eliminada = lista.pop(posicion)
-        print(f"Se elimino la medicion {medicion_eliminada} de la posicion {posicion}. 🗑️")
-    except (ValueError, IndexError):
-        print("La posicion ingresada no es valida. ❌")
+def clasificar_promedio_material(promedio):
+    if promedio < 8:
+        return "Bajo ↘️ (hay que mejorar cultura/flujo)"
+    if promedio <= 15:
+        return "Estable ↔️ (estamos en el camino correcto)"
+    return "Alto 😎 (excelente, estamos reciclando hasta la paciencia)"
 
 
-def gestionar_mediciones(lista):
-    while True:
-        print("\n==============================\nOpciones de gestión de mediciones 📊\n==============================")
-        print("1. Eliminar ultima medicion. 🗑️")
-        print("2. Buscar posicion de una medicion. 🔍")
-        print("3. Eliminar medicion por posicion. 🔍🗑️")
-        print("4. Salir ⚠️")
-
-        opcion = input("Seleccione una opcion ▶️: ")
-
-        if opcion == "1":
-            eliminar_ultima_medicion(lista)
-        elif opcion == "2":
-            buscar_posicion_medicion(lista)
-        elif opcion == "3":
-            eliminar_medicion_por_posicion(lista)
-        elif opcion == "4":
-            break
-        else:
-            print("Opcion no valida. ❌")
-
-        print(f"Lista actual de mediciones 📊: {lista}")
+def clasificar_promedio_global(promedio_global):
+    if promedio_global < 10:
+        return "Alerta ⚠️"
+    if promedio_global < 15:
+        return "Operación normal ✅"
+    return "Jornada sobresaliente 🎉"
 
 
-def mostrar_reporte_promedio(cantidad=100, minimo=0, maximo=50):
-    lista, promedio, estado = calcular_promedio_mediciones(cantidad, minimo, maximo)
-    print(f"La lista de mediciones es ▶️: {lista}")
-    print(f"El promedio de las {cantidad} mediciones 📊 es: {promedio:.2f}")
-    print(estado)
+def mostrar_reporte_promedio(cantidad_por_material=20, minimo=0, maximo=20):
+    mediciones = generar_mediciones_por_material(cantidad_por_material, minimo, maximo)
+    promedios_por_material, promedio_global = calcular_promedios(mediciones)
 
-    gestionar_mediciones(lista)
+    print(f"Mediciones generadas ▶️: {mediciones}")
+    print("\nPromedio y estado por material 📊:")
+
+    for material, promedio in promedios_por_material.items():
+        clasificacion = clasificar_promedio_material(promedio)
+        print(f"- {material}: {promedio:.2f} kg -> {clasificacion}")
+
+    estado_global = clasificar_promedio_global(promedio_global)
+    print(f"\nPromedio global 🌱: {promedio_global:.2f} kg -> {estado_global}")
 
 
 if __name__ == "__main__":
